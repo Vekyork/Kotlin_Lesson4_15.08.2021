@@ -31,7 +31,7 @@ class MainFragmentAdapter :
     }
 
     override fun getItemCount(): Int {
-        TODO("Not yet implemented")
+        return weatherData.size
     }
 
     class MainViewHolder(val binding: MainRecyclerItemBinding) :

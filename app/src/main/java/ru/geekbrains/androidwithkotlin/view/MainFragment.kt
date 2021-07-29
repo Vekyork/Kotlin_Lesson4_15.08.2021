@@ -11,7 +11,6 @@ import com.google.android.material.snackbar.Snackbar
 import ru.geekbrains.androidwithkotlin.R
 import ru.geekbrains.androidwithkotlin.databinding.MainFragmentBinding
 import ru.geekbrains.androidwithkotlin.model.AppState
-import ru.geekbrains.androidwithkotlin.model.data.Weather
 import ru.geekbrains.androidwithkotlin.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
