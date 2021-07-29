@@ -11,6 +11,7 @@ import com.google.android.material.snackbar.Snackbar
 import ru.geekbrains.androidwithkotlin.R
 import ru.geekbrains.androidwithkotlin.databinding.MainFragmentBinding
 import ru.geekbrains.androidwithkotlin.model.AppState
+import ru.geekbrains.androidwithkotlin.model.data.Weather
 import ru.geekbrains.androidwithkotlin.viewmodel.MainViewModel
 
 class MainFragment : Fragment() {
@@ -37,6 +38,7 @@ class MainFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter.removeOnItemViewClickListener()
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -45,6 +47,20 @@ class MainFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        adapter.setOnItemViewClickListener(object: OnItemViewClickListener {
+            override fun onItemViewClick(weather: Weather) {
+                val manager = activity?.supportFragmentManager
+                if (manager != null) {
+                    val bundle = Bundle()
+                    bundle.putParcelable(DetailsFragment.BUNDLE_EXTRA, weather)
+                    manager.beginTransaction()
+                        .add(R.id.container, DetailsFragment.newInstance(bundle))
+                        .addToBackStack("")
+                        .commitAllowingStateLoss()
+                }
+            }
+        })
+
         binding.mainFragmentRecyclerView.adapter = adapter
         binding.mainFragmentFAB.setOnClickListener {
             changeWeatherDataSet()
@@ -89,17 +105,7 @@ class MainFragment : Fragment() {
         }
     }
 
-//    private fun populateData(weatherData: Weather) {
-//        with(binding) {
-//            cityName.text = weatherData.city.city
-//            cityCoordinates.text = String.format(
-//                getString(R.string.city_coordinates),
-//                weatherData.city.lat.toString(),
-//                weatherData.city.lon.toString()
-//            )
-//            temperatureValue.text = weatherData.temperature.toString()
-//            feelsLikeValue.text = weatherData.feelsLike.toString()
-//        }
-//    }
-
+    interface OnItemViewClickListener {
+        fun onItemViewClick(weather: Weather)
+    }
 }
