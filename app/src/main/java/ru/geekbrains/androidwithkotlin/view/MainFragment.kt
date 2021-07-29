@@ -53,7 +53,7 @@ class MainFragment : Fragment() {
             renderData(a)
         }
         viewModel.getData().observe(viewLifecycleOwner, observer)
-        viewModel.getWeatherFromLocalSourceRus()
+        viewModel.getWeatherFromLocalSourceWorld()
     }
 
     private fun changeWeatherDataSet() {
